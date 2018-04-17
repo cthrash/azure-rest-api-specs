@@ -93,21 +93,7 @@
             }
           },
           {
-            "name": "language",
-            "in": "query",
-            "description": "A string indicating which language to return. The service will return recognition results in specified language. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default.zh - Simplified Chinese.",
-            "type": "string",
-            "required": false,
-            "default": "en",
-            "x-nullable": false,
-            "x-ms-enum": {
-              "name": "Language",
-              "modelAsString": false
-            },
-            "enum": [
-              "en",
-              "zh"
-            ]
+            "$ref": "#/parameters/ServiceLanguages"
           },
           {
             "$ref": "../../../Common/Parameters.json#/parameters/ImageUrl"
@@ -258,6 +244,9 @@
             "default": "1"
           },
           {
+            "$ref": "#/parameters/ServiceLanguages"
+          },
+          {
             "$ref": "../../../Common/Parameters.json#/parameters/ImageUrl"
           }
         ],
@@ -278,6 +267,42 @@
         "x-ms-examples": {
           "Successful Describe request": {
             "$ref": "./examples/SuccessfulDescribeWithUrl.json"
+          }
+        }
+      }
+    },
+    "/detect?overload=url": {
+      "post": {
+        "description": "This operation generates a list of objects, along with their bounding boxes, found in the image. Two input methods are supported -- (1) Uploading an image or (2) specifying an image URL. A successful response will be returned in JSON. If the request failed, the response will contain an error code and a message to help understand what went wrong.",
+        "operationId": "DetectObjects",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "../../../Common/Parameters.json#/parameters/ImageUrl"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Object detection result object.",
+            "schema": {
+              "$ref": "#/definitions/DetectResult"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/ComputerVisionError"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Successful Detect request": {
+            "$ref": "./examples/SuccessfulDetectWithUrl.json"
           }
         }
       }
@@ -456,7 +481,8 @@
         "description": "This operation extracts a rich set of visual features based on the image content.",
         "operationId": "AnalyzeImageInStream",
         "consumes": [
-          "application/octet-stream"
+          "application/octet-stream",
+          "multipart/form-data"
         ],
         "produces": [
           "application/json"
@@ -477,16 +503,7 @@
             ]
           },
           {
-            "name": "language",
-            "in": "query",
-            "description": "A string indicating which language to return. The service will return recognition results in specified language. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default.zh - Simplified Chinese.",
-            "type": "string",
-            "required": false,
-            "default": "en",
-            "enum": [
-              "en",
-              "zh"
-            ]
+            "$ref": "#/parameters/ServiceLanguages"
           },
           {
             "$ref": "../../../Common/Parameters.json#/parameters/ImageStream"
@@ -513,11 +530,11 @@
         "description": "This operation generates a thumbnail image with the user-specified width and height. By default, the service analyzes the image, identifies the region of interest (ROI), and generates smart cropping coordinates based on the ROI. Smart cropping helps when you specify an aspect ratio that differs from that of the input image. A successful response contains the thumbnail image binary. If the request failed, the response contains an error code and a message to help determine what went wrong.",
         "operationId": "GenerateThumbnailInStream",
         "consumes": [
-          "application/octet-stream"
+          "application/octet-stream",
+          "multipart/form-data"
         ],
         "produces": [
-          "application/octet-stream",
-          "application/json"
+          "application/octet-stream"
         ],
         "parameters": [
           {
@@ -571,7 +588,8 @@
         "description": "Optical Character Recognition (OCR) detects printed text in an image and extracts the recognized characters into a machine-usable character stream.   Upon success, the OCR results will be returned. Upon failure, the error code together with an error message will be returned. The error code can be one of InvalidImageUrl, InvalidImageFormat, InvalidImageSize, NotSupportedImage,  NotSupportedLanguage, or InternalServerError.",
         "operationId": "RecognizePrintedTextInStream",
         "consumes": [
-          "application/octet-stream"
+          "application/octet-stream",
+          "multipart/form-data"
         ],
         "produces": [
           "application/json"
@@ -608,7 +626,8 @@
         "description": "This operation generates a description of an image in human readable language with complete sentences.  The description is based on a collection of content tags, which are also returned by the operation. More than one description can be generated for each image.  Descriptions are ordered by their confidence score. All descriptions are in English. Two input methods are supported -- (1) Uploading an image or (2) specifying an image URL.A successful response will be returned in JSON.  If the request failed, the response will contain an error code and a message to help understand what went wrong.",
         "operationId": "DescribeImageInStream",
         "consumes": [
-          "application/octet-stream"
+          "application/octet-stream",
+          "multipart/form-data"
         ],
         "produces": [
           "application/json"
@@ -621,6 +640,9 @@
             "type": "string",
             "required": false,
             "default": "1"
+          },
+          {
+            "$ref": "#/parameters/ServiceLanguages"
           },
           {
             "$ref": "../../../Common/Parameters.json#/parameters/ImageStream"
@@ -642,12 +664,50 @@
         }
       }
     },
+    "/detect?overload=stream": {
+      "post": {
+        "description": "This operation generates a list of objects, along with their bounding boxes, found in the image. Two input methods are supported -- (1) Uploading an image or (2) specifying an image URL. A successful response will be returned in JSON. If the request failed, the response will contain an error code and a message to help understand what went wrong.",
+        "operationId": "DetectObjectsInStream",
+        "consumes": [
+          "application/octet-stream",
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "../../../Common/Parameters.json#/parameters/ImageStream"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Object detection result object.",
+            "schema": {
+              "$ref": "#/definitions/DetectResult"
+            }
+          },
+          "default": {
+            "description": "Error response.",
+            "schema": {
+              "$ref": "#/definitions/ComputerVisionError"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Successful Detect request": {
+            "$ref": "./examples/SuccessfulDetectWithUrl.json"
+          }
+        }
+      }
+    },
     "/tag?overload=stream": {
       "post": {
         "description": "This operation generates a list of words, or tags, that are relevant to the content of the supplied image. The Computer Vision API can return tags based on objects, living beings, scenery or actions found in images. Unlike categories, tags are not organized according to a hierarchical classification system, but correspond to image content. Tags may contain hints to avoid ambiguity or provide context, for example the tag “cello” may be accompanied by the hint “musical instrument”. All tags are in English.",
         "operationId": "TagImageInStream",
         "consumes": [
-          "application/octet-stream"
+          "application/octet-stream",
+          "multipart/form-data"
         ],
         "produces": [
           "application/json"
@@ -678,7 +738,8 @@
         "description": "This operation recognizes content within an image by applying a domain-specific model.  The list of domain-specific models that are supported by the Computer Vision API can be retrieved using the /models GET request.  Currently, the API only provides a single domain-specific model: celebrities. Two input methods are supported -- (1) Uploading an image or (2) specifying an image URL. A successful response will be returned in JSON.  If the request failed, the response will contain an error code and a message to help understand what went wrong.",
         "operationId": "AnalyzeImageByDomainInStream",
         "consumes": [
-          "application/octet-stream"
+          "application/octet-stream",
+          "multipart/form-data"
         ],
         "produces": [
           "application/json"
@@ -831,15 +892,12 @@
           }
         },
         "adult": {
-          "description": "A property scoring on whether the image is adult-oriented and/or racy.",
           "$ref": "#/definitions/AdultInfo"
         },
         "color": {
-          "description": "A property scoring on color spectrums.",
           "$ref": "#/definitions/ColorInfo"
         },
         "imageType": {
-          "description": "A property indicating type of image (whether it's clipart or line drawing)",
           "$ref": "#/definitions/ImageType"
         },
         "tags": {
@@ -850,7 +908,6 @@
           }
         },
         "description": {
-          "description": "Description of the image.",
           "$ref": "#/definitions/ImageDescriptionDetails"
         },
         "faces": {
@@ -860,12 +917,18 @@
             "$ref": "#/definitions/FaceDescription"
           }
         },
+        "objects": {
+          "type": "array",
+          "description": "An array of objects detected in the image.",
+          "items": {
+            "$ref": "#/definitions/ObjectsInfo"
+          }
+        },
         "requestId": {
           "type": "string",
           "description": "Id of the request for tracking purposes."
         },
         "metadata": {
-          "description": "Image metadata",
           "$ref": "#/definitions/ImageMetadata"
         }
       }
@@ -975,7 +1038,6 @@
       "description": "Result of image analysis using a specific domain model including additional metadata.",
       "properties": {
         "result": {
-          "description": "Result of the image analysis.",
           "x-ms-client-flatten": true,
           "$ref": "#/definitions/DomainModelResult"
         },
@@ -984,7 +1046,6 @@
           "description": "Id of the REST API request."
         },
         "metadata": {
-          "description": "Additional image metadata",
           "$ref": "#/definitions/ImageMetadata"
         }
       }
@@ -1027,7 +1088,6 @@
           "description": "Id of the REST API request."
         },
         "metadata": {
-          "description": "Image metadata",
           "$ref": "#/definitions/ImageMetadata"
         }
       }
@@ -1055,7 +1115,6 @@
           "description": "Id of the REST API request."
         },
         "metadata": {
-          "description": "Image metadata",
           "$ref": "#/definitions/ImageMetadata"
         }
       }
@@ -1256,8 +1315,6 @@
           "description": "Scoring of the category."
         },
         "detail": {
-          "type": "object",
-          "description": "Additional category detail if available.",
           "$ref": "#/definitions/CategoryDetail"
         }
       }
@@ -1272,6 +1329,94 @@
           "items": {
             "$ref": "#/definitions/CelebritiesModel"
           }
+        }
+      }
+    },
+    "DetectResult": {
+      "type": "object",
+      "description": "An object describing object detection results.",
+      "properties": {
+        "objects": {
+          "type": "array",
+          "description": "An array of objects detected in the image.",
+          "items": {
+            "$ref": "#/definitions/ObjectsInfo"
+          }
+        },
+        "requestId": {
+          "type": "string",
+          "description": "Id of the REST API request."
+        },
+        "metadata": {
+          "$ref": "#/definitions/ImageMetadata"
+        }
+      }
+    },
+    "ObjectsInfo": {
+      "type": "array",
+      "description": "An array of objects detected in the image.",
+      "items": {
+        "$ref": "#/definitions/ObjectInfo"
+      }
+    },
+    "ObjectInfoParent": {
+      "type": "object",
+      "description": "An object detected in the image.",
+      "properties": {
+        "object": {
+          "type": "string",
+          "description": "Label of the detected object."
+        },
+        "confidence": {
+          "type": "number",
+          "format": "double",
+          "description": "Confidence score of the detected object."
+        },
+        "parent": {
+          "$ref": "#/definitions/ObjectInfoParent"
+        }
+      }
+    },
+    "ObjectInfo": {
+      "type": "object",
+      "description": "An object detected in the image.",
+      "properties": {
+        "rectangle": {
+          "$ref": "#/definitions/ObjectRect"
+        },
+        "object": {
+          "type": "string",
+          "description": "Label of the detected object."
+        },
+        "confidence": {
+          "type": "number",
+          "format": "double",
+          "description": "Confidence score of the detected object."
+        },
+        "parent": {
+          "$ref": "#/definitions/ObjectInfoParent"
+        }
+      }
+    },
+    "ObjectRect": {
+      "type": "object",
+      "description": "Bounding box of the detected object.",
+      "properties": {
+        "x": {
+          "type": "integer",
+          "description": "X-coordinate of the top left pixel of the bounding box."
+        },
+        "y": {
+          "type": "integer",
+          "description": "Y-coordinate of the top left pixel of the bounding box."
+        },
+        "w": {
+          "type": "integer",
+          "description": "Width measured from the top-left pixel of the bounding box."
+        },
+        "h": {
+          "type": "integer",
+          "description": "Height measured from the top-left pixel of the bounding box."
         }
       }
     },
@@ -1320,7 +1465,7 @@
     "VisualFeatures": {
       "name": "visualFeatures",
       "in": "query",
-      "description": "A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include:Categories - categorizes image content according to a taxonomy defined in documentation. Tags - tags the image with a detailed list of words related to the image content. Description - describes the image content with a complete English sentence. Faces - detects if faces are present. If present, generate coordinates, gender and age. ImageType - detects if image is clipart or a line drawing. Color - determines the accent color, dominant color, and whether an image is black&white.Adult - detects if the image is pornographic in nature (depicts nudity or a sex act).  Sexually suggestive content is also detected.",
+      "description": "A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include:Categories - categorizes image content according to a taxonomy defined in documentation. Tags - tags the image with a detailed list of words related to the image content. Description - describes the image content with a complete English sentence. Faces - detects if faces are present. If present, generate coordinates, gender and age. ImageType - detects if image is clipart or a line drawing. Color - determines the accent color, dominant color, and whether an image is black&white.Adult - detects if the image is pornographic in nature (depicts nudity or a sex act).  Sexually suggestive content is also detected. Objects - detects objects in the image, with bounding boxes.",
       "type": "array",
       "x-ms-parameter-location": "method",
       "required": false,
@@ -1339,7 +1484,8 @@
           "Categories",
           "Color",
           "Tags",
-          "Description"
+          "Description",
+          "Objects"
         ]
       }
     },
@@ -1403,6 +1549,23 @@
       "x-ms-parameter-location": "method",
       "type": "boolean",
       "default": false
+    },
+    "ServiceLanguages": {
+      "name": "language",
+      "in": "query",
+      "description": "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default.zh - Simplified Chinese.",
+      "type": "string",
+      "required": false,
+      "default": "en",
+      "x-nullable": false,
+      "x-ms-enum": {
+        "name": "Language",
+        "modelAsString": false
+      },
+      "enum": [
+        "en",
+        "zh"
+      ]
     }
   }
 }
