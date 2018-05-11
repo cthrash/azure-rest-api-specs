@@ -94,6 +94,19 @@ override-info:
   title: PolicyClient
 ```
 
+### Tag: package-pure-policy-2017-06
+These settings apply only when `--tag=package-pure-policy-2017-06` is specified on the command line.
+
+``` yaml $(tag) == 'package-pure-policy-2017-06'
+input-file:
+- Microsoft.Authorization/preview/2017-06-01-preview/policyAssignments.json
+- Microsoft.Authorization/preview/2017-06-01-preview/policySetDefinitions.json
+
+# Needed when there is more than one input file
+override-info:
+  title: PolicyClient
+```
+
 ### Tag: package-policy-2016-12
 These settings apply only when `--tag=package-policy-2016-12` is specified on the command line.
 
@@ -327,6 +340,7 @@ batch:
   - tag: package-subscriptions-2015-11
   - tag: package-links-2016-09
   - tag: package-managedapplications-2016-09
+  - tag: package-managedapplications-2017-09
 ```
 
 ### Tag: package-features-2015-12 and go
@@ -366,7 +380,7 @@ Please also specify `--go-sdk-folder=<path to the root directory of your azure-s
 
 ``` yaml $(tag) == 'package-policy-2017-06' && $(go)
 namespace: policy
-output-folder: $(go-sdk-folder)/services/resources/mgmt/2017-06-01-preview/policy
+output-folder: $(go-sdk-folder)/services/preview/resources/mgmt/2017-06-01-preview/policy
 ```
 
 ### Tag: package-policy-2016-12 and go
@@ -396,7 +410,7 @@ Please also specify `--go-sdk-folder=<path to the root directory of your azure-s
 
 ``` yaml $(tag) == 'package-policy-2015-10' && $(go)
 namespace: policy
-output-folder: $(go-sdk-folder)/services/resources/mgmt/2015-10-01-preview/policy
+output-folder: $(go-sdk-folder)/services/preview/resources/mgmt/2015-10-01-preview/policy
 ```
 
 ### Tag: package-resources-2018-02 and go
@@ -496,7 +510,17 @@ Please also specify `--go-sdk-folder=<path to the root directory of your azure-s
 
 ``` yaml $(tag) == 'package-managedapplications-2016-09' && $(go)
 namespace: managedapplications
-output-folder: $(go-sdk-folder)/services/resources/mgmt/2016-09-01-preview/managedapplications
+output-folder: $(go-sdk-folder)/services/preview/resources/mgmt/2016-09-01-preview/managedapplications
+```
+
+### Tag: package-managedapplications-2017-09 and go
+
+These settings apply only when `--tag=package-managedapplications-2017-09 --go` is specified on the command line.
+Please also specify `--go-sdk-folder=<path to the root directory of your azure-sdk-for-go clone>`.
+
+``` yaml $(tag) == 'package-managedapplications-2017-09' && $(go)
+namespace: managedapplications
+output-folder: $(go-sdk-folder)/services/resources/mgmt/2017-09-01/managedapplications
 ```
 
 ## Python

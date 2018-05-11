@@ -27,6 +27,17 @@ These are the global settings for the Logic API.
 ``` yaml
 openapi-type: arm
 tag: package-2016-06
+
+directive:
+  - where:
+      - $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/listExpressionTraces"].post.responses["200"].schema
+    suppress:
+      - CollectionObjectPropertiesNaming
+  - where:
+      - $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}/listExpressionTraces"].post.responses["200"].schema
+    suppress:
+      - CollectionObjectPropertiesNaming
+
 ```
 
 
@@ -153,7 +164,7 @@ These settings apply only when `--tag=package-2015-08-preview --go` is specified
 Please also specify `--go-sdk-folder=<path to the root directory of your azure-sdk-for-go clone>`.
 
 ``` yaml $(tag) == 'package-2015-08-preview' && $(go)
-output-folder: $(go-sdk-folder)/services/logic/mgmt/2015-08-01-preview/logic
+output-folder: $(go-sdk-folder)/services/preview/logic/mgmt/2015-08-01-preview/logic
 ```
 
 ### Tag: package-2015-02-preview and go
@@ -162,7 +173,7 @@ These settings apply only when `--tag=package-2015-02-preview --go` is specified
 Please also specify `--go-sdk-folder=<path to the root directory of your azure-sdk-for-go clone>`.
 
 ``` yaml $(tag) == 'package-2015-02-preview' && $(go)
-output-folder: $(go-sdk-folder)/services/logic/mgmt/2015-02-01-preview/logic
+output-folder: $(go-sdk-folder)/services/preview/logic/mgmt/2015-02-01-preview/logic
 ```
 
 
