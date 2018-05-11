@@ -93,7 +93,7 @@
             }
           },
           {
-            "$ref": "#/parameters/ServiceLanguages"
+            "$ref": "#/parameters/ServiceLanguage"
           },
           {
             "$ref": "../../../Common/Parameters.json#/parameters/ImageUrl"
@@ -244,7 +244,7 @@
             "default": "1"
           },
           {
-            "$ref": "#/parameters/ServiceLanguages"
+            "$ref": "#/parameters/ServiceLanguage"
           },
           {
             "$ref": "../../../Common/Parameters.json#/parameters/ImageUrl"
@@ -271,42 +271,6 @@
         }
       }
     },
-    "/detect?overload=url": {
-      "post": {
-        "description": "This operation generates a list of objects, along with their bounding boxes, found in the image. Two input methods are supported -- (1) Uploading an image or (2) specifying an image URL. A successful response will be returned in JSON. If the request failed, the response will contain an error code and a message to help understand what went wrong.",
-        "operationId": "DetectObjects",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "$ref": "../../../Common/Parameters.json#/parameters/ImageUrl"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Object detection result object.",
-            "schema": {
-              "$ref": "#/definitions/DetectResult"
-            }
-          },
-          "default": {
-            "description": "Error response.",
-            "schema": {
-              "$ref": "#/definitions/ComputerVisionError"
-            }
-          }
-        },
-        "x-ms-examples": {
-          "Successful Detect request": {
-            "$ref": "./examples/SuccessfulDetectWithUrl.json"
-          }
-        }
-      }
-    },
     "/tag?overload=url": {
       "post": {
         "description": "This operation generates a list of words, or tags, that are relevant to the content of the supplied image. The Computer Vision API can return tags based on objects, living beings, scenery or actions found in images. Unlike categories, tags are not organized according to a hierarchical classification system, but correspond to image content. Tags may contain hints to avoid ambiguity or provide context, for example the tag “cello” may be accompanied by the hint “musical instrument”. All tags are in English.",
@@ -318,6 +282,9 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "$ref": "#/parameters/ServiceLanguage"
+          },
           {
             "$ref": "../../../Common/Parameters.json#/parameters/ImageUrl"
           }
@@ -503,7 +470,7 @@
             ]
           },
           {
-            "$ref": "#/parameters/ServiceLanguages"
+            "$ref": "#/parameters/ServiceLanguage"
           },
           {
             "$ref": "../../../Common/Parameters.json#/parameters/ImageStream"
@@ -642,7 +609,7 @@
             "default": "1"
           },
           {
-            "$ref": "#/parameters/ServiceLanguages"
+            "$ref": "#/parameters/ServiceLanguage"
           },
           {
             "$ref": "../../../Common/Parameters.json#/parameters/ImageStream"
@@ -660,43 +627,6 @@
             "schema": {
               "$ref": "#/definitions/ComputerVisionError"
             }
-          }
-        }
-      }
-    },
-    "/detect?overload=stream": {
-      "post": {
-        "description": "This operation generates a list of objects, along with their bounding boxes, found in the image. Two input methods are supported -- (1) Uploading an image or (2) specifying an image URL. A successful response will be returned in JSON. If the request failed, the response will contain an error code and a message to help understand what went wrong.",
-        "operationId": "DetectObjectsInStream",
-        "consumes": [
-          "application/octet-stream",
-          "multipart/form-data"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "$ref": "../../../Common/Parameters.json#/parameters/ImageStream"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Object detection result object.",
-            "schema": {
-              "$ref": "#/definitions/DetectResult"
-            }
-          },
-          "default": {
-            "description": "Error response.",
-            "schema": {
-              "$ref": "#/definitions/ComputerVisionError"
-            }
-          }
-        },
-        "x-ms-examples": {
-          "Successful Detect request": {
-            "$ref": "./examples/SuccessfulDetectWithUrl.json"
           }
         }
       }
@@ -915,13 +845,6 @@
           "description": "An array of possible faces within the image.",
           "items": {
             "$ref": "#/definitions/FaceDescription"
-          }
-        },
-        "objects": {
-          "type": "array",
-          "description": "An array of objects detected in the image.",
-          "items": {
-            "$ref": "#/definitions/ObjectsInfo"
           }
         },
         "requestId": {
@@ -1332,94 +1255,6 @@
         }
       }
     },
-    "DetectResult": {
-      "type": "object",
-      "description": "An object describing object detection results.",
-      "properties": {
-        "objects": {
-          "type": "array",
-          "description": "An array of objects detected in the image.",
-          "items": {
-            "$ref": "#/definitions/ObjectsInfo"
-          }
-        },
-        "requestId": {
-          "type": "string",
-          "description": "Id of the REST API request."
-        },
-        "metadata": {
-          "$ref": "#/definitions/ImageMetadata"
-        }
-      }
-    },
-    "ObjectsInfo": {
-      "type": "array",
-      "description": "An array of objects detected in the image.",
-      "items": {
-        "$ref": "#/definitions/ObjectInfo"
-      }
-    },
-    "ObjectInfoParent": {
-      "type": "object",
-      "description": "An object detected in the image.",
-      "properties": {
-        "object": {
-          "type": "string",
-          "description": "Label of the detected object."
-        },
-        "confidence": {
-          "type": "number",
-          "format": "double",
-          "description": "Confidence score of the detected object."
-        },
-        "parent": {
-          "$ref": "#/definitions/ObjectInfoParent"
-        }
-      }
-    },
-    "ObjectInfo": {
-      "type": "object",
-      "description": "An object detected in the image.",
-      "properties": {
-        "rectangle": {
-          "$ref": "#/definitions/ObjectRect"
-        },
-        "object": {
-          "type": "string",
-          "description": "Label of the detected object."
-        },
-        "confidence": {
-          "type": "number",
-          "format": "double",
-          "description": "Confidence score of the detected object."
-        },
-        "parent": {
-          "$ref": "#/definitions/ObjectInfoParent"
-        }
-      }
-    },
-    "ObjectRect": {
-      "type": "object",
-      "description": "Bounding box of the detected object.",
-      "properties": {
-        "x": {
-          "type": "integer",
-          "description": "X-coordinate of the top left pixel of the bounding box."
-        },
-        "y": {
-          "type": "integer",
-          "description": "Y-coordinate of the top left pixel of the bounding box."
-        },
-        "w": {
-          "type": "integer",
-          "description": "Width measured from the top-left pixel of the bounding box."
-        },
-        "h": {
-          "type": "integer",
-          "description": "Height measured from the top-left pixel of the bounding box."
-        }
-      }
-    },
     "ComputerVisionError": {
       "type": "object",
       "required": [
@@ -1459,13 +1294,16 @@
           "description": "A unique request identifier."
         }
       }
+    },
+    "ServiceLanguage": {
+      "type": "string"
     }
   },
   "parameters": {
     "VisualFeatures": {
       "name": "visualFeatures",
       "in": "query",
-      "description": "A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include:Categories - categorizes image content according to a taxonomy defined in documentation. Tags - tags the image with a detailed list of words related to the image content. Description - describes the image content with a complete English sentence. Faces - detects if faces are present. If present, generate coordinates, gender and age. ImageType - detects if image is clipart or a line drawing. Color - determines the accent color, dominant color, and whether an image is black&white.Adult - detects if the image is pornographic in nature (depicts nudity or a sex act).  Sexually suggestive content is also detected. Objects - detects objects in the image, with bounding boxes.",
+      "description": "A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include:Categories - categorizes image content according to a taxonomy defined in documentation. Tags - tags the image with a detailed list of words related to the image content. Description - describes the image content with a complete English sentence. Faces - detects if faces are present. If present, generate coordinates, gender and age. ImageType - detects if image is clipart or a line drawing. Color - determines the accent color, dominant color, and whether an image is black&white.Adult - detects if the image is pornographic in nature (depicts nudity or a sex act).  Sexually suggestive content is also detected.",
       "type": "array",
       "x-ms-parameter-location": "method",
       "required": false,
@@ -1484,8 +1322,7 @@
           "Categories",
           "Color",
           "Tags",
-          "Description",
-          "Objects"
+          "Description"
         ]
       }
     },
@@ -1550,20 +1387,19 @@
       "type": "boolean",
       "default": false
     },
-    "ServiceLanguages": {
+    "ServiceLanguage": {
       "name": "language",
       "in": "query",
-      "description": "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default.zh - Simplified Chinese.",
+      "description": "The desired language for output generation. If this parameter is not specified, the default value is &quot;en&quot;.Supported languages:en - English, Default.ja - Japanese pt - Portuguese zh - Simplified Chinese.",
       "type": "string",
       "required": false,
-      "default": "en",
+      "x-ms-parameter-location": "method",
       "x-nullable": false,
-      "x-ms-enum": {
-        "name": "Language",
-        "modelAsString": false
-      },
+      "default": "en",
       "enum": [
         "en",
+        "ja",
+        "pt",
         "zh"
       ]
     }
