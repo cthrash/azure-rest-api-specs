@@ -989,7 +989,8 @@
       "properties": {
         "result": {
           "x-ms-client-flatten": true,
-          "$ref": "#/definitions/DomainModelResult"
+          "type": "object",
+          "description": "Model-specific response"
         },
         "requestId": {
           "type": "string",
