@@ -895,7 +895,8 @@
       "type": "object",
       "properties": {
         "language": {
-          "$ref": "#/definitions/OcrResult"
+          "type": "string",
+          "description": "The BCP-47 language code of the text in the image."
         },
         "textAngle": {
           "type": "number",
