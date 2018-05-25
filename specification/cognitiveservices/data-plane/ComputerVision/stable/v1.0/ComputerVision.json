@@ -1001,6 +1001,56 @@
         }
       }
     },
+    "CelebrityResults": {
+      "type": "object",
+      "description": "List of celebrities recognized in the image.",
+      "properties": {
+        "celebrities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CelebritiesModel"
+          }
+        },
+        "requestId": {
+          "type": "string",
+          "description": "Id of the REST API request."
+        },
+        "metadata": {
+          "$ref": "#/definitions/ImageMetadata"
+        }
+      }
+    },
+    "LandmarkResults": {
+      "type": "object",
+      "description": "List of landmarks recognized in the image.",
+      "properties": {
+        "landmarks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "A landmark recognized in the image",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the landmark."
+              },
+              "confidence": {
+                "type": "number",
+                "format": "double",
+                "description": "Confidence level for the landmark recognition."
+              }
+            }
+          }
+        },
+        "requestId": {
+          "type": "string",
+          "description": "Id of the REST API request."
+        },
+        "metadata": {
+          "$ref": "#/definitions/ImageMetadata"
+        }
+      }
+    },
     "ImageDescription": {
       "type": "object",
       "description": "A collection of content tags, along with a list of captions sorted by confidence level, and image metadata.",
