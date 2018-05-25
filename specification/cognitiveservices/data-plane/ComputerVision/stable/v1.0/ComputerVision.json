@@ -1001,18 +1001,6 @@
         }
       }
     },
-    "DomainModelResult": {
-      "type": "object",
-      "properties": {
-        "celebrities": {
-          "type": "array",
-          "description": "An array of possible celebritied identified in the image.",
-          "items": {
-            "$ref": "#/definitions/CelebritiesModel"
-          }
-        }
-      }
-    },
     "ImageDescription": {
       "type": "object",
       "description": "A collection of content tags, along with a list of captions sorted by confidence level, and image metadata.",
