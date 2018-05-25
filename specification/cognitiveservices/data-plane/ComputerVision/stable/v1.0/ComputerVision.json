@@ -658,6 +658,9 @@
         ],
         "parameters": [
           {
+            "$ref": "#/parameters/ServiceLanguage"
+          },
+          {
             "$ref": "../../../Common/Parameters.json#/parameters/ImageStream"
           }
         ],
