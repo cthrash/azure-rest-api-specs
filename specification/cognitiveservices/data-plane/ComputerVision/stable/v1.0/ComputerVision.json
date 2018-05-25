@@ -329,6 +329,9 @@
             "type": "string"
           },
           {
+            "$ref": "#/parameters/ServiceLanguage"
+          },
+          {
             "$ref": "../../../Common/Parameters.json#/parameters/ImageUrl"
           }
         ],
@@ -697,6 +700,9 @@
             "description": "The domain-specific content to recognize.",
             "required": true,
             "type": "string"
+          },
+          {
+            "$ref": "#/parameters/ServiceLanguage"
           },
           {
             "$ref": "../../../Common/Parameters.json#/parameters/ImageStream"
