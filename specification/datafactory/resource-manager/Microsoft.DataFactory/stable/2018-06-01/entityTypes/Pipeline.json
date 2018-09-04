@@ -1,4 +1,4 @@
-﻿{
+{
   "swagger": "2.0",
   "info": {
     "title": "DataFactoryManagementClient",
@@ -36,7 +36,17 @@
           "items": {
             "type": "object"
           }
-        } 
+        },
+        "folder": {
+          "description": "The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level.",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "The name of the folder that this Pipeline is in.",
+              "type": "string"
+            }
+          }
+        }
       }
     },
     "Activity": {
@@ -64,11 +74,11 @@
           }
         },
         "userProperties": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Activity user properties." 
+          "type": "array",
+          "description": "Activity user properties.",
+          "items": {
+            "$ref": "#/definitions/UserProperty"
+          }
         }
       },
       "additionalProperties": {
@@ -77,6 +87,24 @@
       "required": [
         "name",
         "type"
+      ]
+    },
+    "UserProperty": {
+      "description": "User property.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "User proprety name.",
+          "type": "string"
+        },
+        "value": {
+          "description": "User proprety value. Type: string (or Expression with resultType string).",
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "value"
       ]
     },
     "ActivityDependency": {
