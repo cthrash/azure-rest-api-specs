@@ -4,23 +4,23 @@
 
 Configuration for generating Computer Vision SDK.
 
-The current release is `release_2_0`.
+The current release is `release_2_1`.
 
 ``` yaml
 
-tag: release_2_0
+tag: release_2_1
 add-credentials: true
 openapi-type: data-plane
 ```
 # Releases
 
-### Release 2.0
-These settings apply only when `--tag=release_2_0` is specified on the command line.
+### Release 2.1
+These settings apply only when `--tag=release_2_1` is specified on the command line.
 
-``` yaml $(tag) == 'release_2_0'
+``` yaml $(tag) == 'release_2_1'
 input-file: 
-  - stable/v2.0/ComputerVision.json
-  - stable/v2.0/Ocr.json
+  - stable/v2.1/ComputerVision.json
+  - stable/v2.1/Ocr.json
 ```
 
 ## Swagger to SDK
@@ -49,7 +49,7 @@ csharp:
   license-header: MICROSOFT_MIT_NO_VERSION
   azure-arm: false
   namespace: Microsoft.Azure.CognitiveServices.Vision.ComputerVision
-  output-folder: $(csharp-sdks-folder)/CognitiveServices/CognitiveServices.Vision.ComputerVision/src/Generated
+  output-folder: $(csharp-sdks-folder)/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision/Generated
   clear-output-folder: true
 
 directive:
